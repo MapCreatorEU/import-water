@@ -30,7 +30,7 @@ function generalize_water() {
     local source_table_name="$2"
     local tolerance="$3"
     echo "Generalize $target_table_name with tolerance $tolerance from $source_table_name"
-    echo "CREATE TABLE $target_table_name AS SELECT ST_Simplify(geometry, $tolerance) AS geometry FROM $source_table_name" | exec_psql
+		echo "CREATE TABLE $target_table_name AS SELECT st_makevalid(ST_Simplify(geometry, $tolerance)) AS geometry FROM $source_table_name" | exec_psql
     echo "CREATE INDEX ON $target_table_name USING gist (geometry)" | exec_psql
     echo "ANALYZE $target_table_name" | exec_psql
 }
